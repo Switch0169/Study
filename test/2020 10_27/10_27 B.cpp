@@ -1,9 +1,11 @@
 #include<iostream>
-
 using namespace std;
-
+class CDate
+{
+public:
+    
+};
 int main()
 {
-    cout<<"hello world";
     return 0;
 }
