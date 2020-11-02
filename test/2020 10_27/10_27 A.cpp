@@ -15,16 +15,21 @@ public:
     CTelNumber(CTelNumber &s)
     {
         number = new char[100];
-        char swnumber[8] = {0};
+        char swnumber[10] = {0};
         int i, j;
+        int flag=1;
         for (i = 0; 1; i++)
         {
             if (s.number[i] == 0)
             {
                 break;
             }
+            if(s.number[i]>'9'||s.number[i]<'0'){
+                flag= 0*flag;
+            }
         }
-        if (i == 7)
+        
+        if (i == 7&& flag == 1)
         {
             if (s.number[0] == '2' || s.number[0] == '3' || s.number[0] == '4')
             {
