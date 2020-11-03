@@ -98,9 +98,8 @@ public:
     void fightback(){
         ;
     }
-    void attacked(int d,int d1){
+    void attacked(int d){
         hp=hp-d;
-        hp=hp-d1;
     }
     void display(){
         cout<<"rank="<<rank<<" hp="<<hp<<" damage="<<damage<<" exp="<<exp<<" money="<<money<<endl;
@@ -143,9 +142,8 @@ public:
     void fightback(){
         ;
     }
-    void attacked(int d,int d1){
+    void attacked(int d){
         hp=hp-d;
-        hp=hp-(d1+1);
     }
     void display(){
         cout<<"rank="<<rank<<" hp="<<hp<<" damage="<<damage<<" exp="<<exp<<" money="<<money<<endl;
@@ -188,9 +186,8 @@ public:
     void fightback(){
         ;
     }
-    void attacked(int d,int d1){
+    void attacked(int d){
         hp=hp-d/2;
-        hp=hp-(d1+2);
     }
     void display(){
         cout<<"rank="<<rank<<" hp="<<hp<<" damage="<<damage<<" exp="<<exp<<" money="<<money<<endl;
@@ -233,9 +230,8 @@ public:
     void fightback(){
         ;
     }
-    void attacked(int d,int d1){
+    void attacked(int d){
         hp=hp-d;
-        hp=hp-d1;
     }
     void display(){
         cout<<"rank="<<rank<<" hp="<<hp<<" damage="<<damage<<" exp="<<exp<<" money="<<money<<endl;
@@ -289,61 +285,192 @@ public:
 int main()
 {
     int flag=0;
+    int flag1,flag2,flag3,flag4;
     int eflag=0;
+    int winflag=0;
     int t;
     cin>>t;
     int rank;
-    int Nrank,Srank,Arank,Drank;
+    int Nrank,Srank,Drank,Arank;
     while(t--){
-        while(flag){
             flag=1;
+            flag1=1;
+            flag2=1;
+            flag3=1;
+            flag4=1;
             eflag=0;
+            winflag=0;
             cin>>rank;
+            cin>>Nrank>>Srank>>Drank>>Arank;
             Ultraman Outman;
             Outman.initial(rank);
             Outman.display();
-            cin>>Nrank>>Srank>>Arank>>Drank;
             Angel OutAngel;
             OutAngel.initial(rank);
             NMonster monsterN;
             monsterN.initial(Nrank);
+            monsterN.display();
             SMonster monsterS;
             monsterS.initial(Srank);
-            AMonster monsterA;
-            monsterA.initial(Arank);
+            monsterS.display();
             DMonster monsterD;
             monsterD.initial(Drank);
-            monsterN.attacked(Outman.getdamage(),OutAngel.getdamage());
-            monsterS.attacked(Outman.getdamage(),OutAngel.getdamage());
-            monsterA.attacked(Outman.getdamage(),OutAngel.getdamage());
-            monsterD.attacked(Outman.getdamage(),OutAngel.getdamage());
-            if(monsterN.gethp()>0){
-                Outman.attacked('N',monsterN.getdamage(),0);
-                if(Outman.gethp()>10){
-                    if(Outman.gethp()<5*Outman.getrank()){
-                        Outman.restore();
+            monsterD.display();
+            Angel AngelD;
+            AngelD.initial(Srank);
+            AMonster monsterA;
+            Angel AngelA;
+            AngelA.initial(Arank);
+            monsterA.initial(Arank);
+            monsterA.display();
+        while(flag){
+            if(flag1==1)
+                    monsterN.attacked(Outman.getdamage());
+            if(flag2==1)
+                    monsterS.attacked(Outman.getdamage());
+            if(flag3==1)
+                    monsterD.attacked(Outman.getdamage());
+            if(flag4==1)
+                    monsterA.attacked(Outman.getdamage());
+            if(flag1==1){
+                if(monsterN.gethp()>0){
+                    Outman.attacked('N',monsterN.getdamage(),0);
+                    if(Outman.gethp()>10){
+                        if(Outman.gethp()<5*Outman.getrank()){
+                            Outman.restore();
+                        }
+                    }
+                    else{
+                        Outman.escape();
+                        eflag=1;
+                        cout<<"lose"<<endl;
+                        Outman.display();
+                        flag=0;
                     }
                 }
-                else{
-                    Outman.escape();
-                    eflag=1;
-                    cout<<"lose"<<endl;
+                else if(monsterN.gethp()<=0){
+                    Outman.win(monsterN.getmoney(),monsterN.getexp(),0,0,'N');
+                    while(1){
+                        if(Outman.getexp()<Outman.getrank()*10)
+                            break;
+                        Outman.upgrade();
+                        OutAngel.initial(Outman.getrank());
+                    }
+                    flag1=0;
+                    cout<<"win"<<endl;
                     Outman.display();
-                    flag=0;
+                    winflag++;
                 }
-            }
-            else if(monsterN.gethp()<=0){
-                Outman.win(monsterN.getmoney(),monsterN.getexp(),0,0);
-                Outman.upgrade();
-                cout<<"win"<<endl;
-                Outman.display();
-                flag=1;
             }
             if (flag==0)
             {
                 break;
             }
-            
+            if(flag2==1){
+                if(monsterS.gethp()>0){
+                    Outman.attacked('S',monsterS.getdamage(),0);
+                    if(Outman.gethp()>10){
+                        if(Outman.gethp()<5*Outman.getrank()){
+                            Outman.restore();
+                        }
+                    }
+                    else{
+                        Outman.escape();
+                        eflag=1;
+                        cout<<"lose"<<endl;
+                        Outman.display();
+                        flag=0;
+                    }
+                }
+                else if(monsterS.gethp()<=0){
+                    Outman.win(monsterS.getmoney(),monsterS.getexp(),0,0,'S');
+                    while(1){
+                        if(Outman.getexp()<Outman.getrank()*10)
+                            break;
+                        Outman.upgrade();
+                        OutAngel.initial(Outman.getrank());
+                    }
+                    flag2=0;
+                    cout<<"win"<<endl;
+                    Outman.display();
+                    winflag++;
+                }
+            }
+            if (flag==0)
+            {
+                break;
+            }
+            if(flag3==1){
+                if(monsterD.gethp()>0){
+                    Outman.attacked('D',monsterD.getdamage(),0);
+                    if(Outman.gethp()>10){
+                        if(Outman.gethp()<5*Outman.getrank()){
+                            Outman.restore();
+                        }
+                    }
+                    else{
+                        Outman.escape();
+                        eflag=1;
+                        cout<<"lose"<<endl;
+                        Outman.display();
+                        flag=0;
+                    }
+                }
+                else if(monsterD.gethp()<=0){
+                    Outman.win(monsterD.getmoney(),monsterD.getexp(),AngelD.getmoney(),AngelD.getexp(),'D');
+                    while(1){
+                        if(Outman.getexp()<Outman.getrank()*10)
+                            break;
+                        Outman.upgrade();
+                        OutAngel.initial(Outman.getrank());
+                    }
+                    flag3=0;
+                    cout<<"win"<<endl;
+                    Outman.display();
+                    winflag++;
+                }
+            }
+            if (flag==0)
+            {
+                break;
+            }
+            if(flag4==1){
+                if(monsterA.gethp()>0){
+                    Outman.attacked('A',monsterA.getdamage(),AngelA.getdamage());
+                    if(Outman.gethp()>10){
+                        if(Outman.gethp()<5*Outman.getrank()){
+                            Outman.restore();
+                        }
+                    }
+                    else{
+                        Outman.escape();
+                        eflag=1;
+                        cout<<"lose"<<endl;
+                        Outman.display();
+                        flag=0;
+                    }
+                }
+                else if(monsterA.gethp()<=0){
+                    Outman.win(monsterA.getmoney(),monsterA.getexp(),AngelA.getmoney(),AngelA.getexp(),'N');
+                    while(1){
+                        if(Outman.getexp()<Outman.getrank()*10)
+                            break;
+                        Outman.upgrade();
+                        OutAngel.initial(Outman.getrank());
+                    }
+                    flag4=0;
+                    cout<<"win"<<endl;
+                    Outman.display();
+                    winflag++;
+                }
+            }
+            if(winflag==4){
+                flag=0;
+                cout<<"win all"<<endl;
+            }
+            if(flag==0){
+                break;
+            }
         }
     }
     return 0;
