@@ -1,8 +1,8 @@
 #include<iostream>
 using namespace std;
-int Quick(long long base, long long x)
+long long Quick(long long base, long long x)
 {
-    int ans = 1;
+    long long ans = 1;
     while(x>0){
         if(x%2==1){
             ans = ans * base;
@@ -12,16 +12,29 @@ int Quick(long long base, long long x)
     }
     return ans;
 }
-int Quickmod(long long base, long long x, long long mod)
+long long Quickmod(long long base, long long x, long long mod)
 {
-    int ans = 1;
+    long long ans = 1;
     base = base % mod;
     while(x>0){
         if(x%2==1){
-            ans = ans * base % mod;
+            ans = Quickaddmod(ans,base,mod);
         }
         x = x/2;
-        base = base * base % mod;
+        base = Quickaddmod(base,base,mod);
+    }
+    return ans;
+}
+long long Quickaddmod(long long m, long long n, long long mod)
+{
+    long long ans = 0;
+    m = m % mod;
+    while(n>0){
+        if(n%2==1){
+            ans = (ans + m)% mod;
+        }
+        n = n/2;
+        m = (m + m) % mod;
     }
     return ans;
 }

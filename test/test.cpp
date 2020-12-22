@@ -1,477 +1,99 @@
-#include<iostream>
-using namespace std;
-class Ultraman
+#include <iostream>
+#include <cstdio>
+#include <cmath>
+
+using namespace std;
+typedef long long ll;
+const int maxn = 1000;
+
+ll mod_mul(ll a, ll b, ll mod)
 {
-private:
-    int rank;
-    int exp;
-    int hp;
-    int damage;
-    int money;
-public:
-    void initial(int r){
-        rank=r;
-        exp=0;
-        hp=10*rank;
-        damage=3*rank;
-        money=10*rank;
-    }
-    void display(){
-        cout<<"rank="<<rank<<" hp="<<hp<<" damage="<<damage<<" exp="<<exp<<" money="<<money<<endl;
-    }
-    void escape(){
-        money=0;
-    }
-    void attack(){
-        ;
-    }
-    void attacked(char t,int d1, int d2){
-        hp=hp-d1/2;
-        if(t=='A'){
-            hp=hp-d2/2;
-        }
-    }
-    void restore(){
-        int resthp=10*rank-hp;
-        if((money/10)<=resthp){
-            hp=hp+money/10;
-            money=0;
-        }
-        else{
-            hp=rank*10;
-            money=money-resthp*10; 
-        }
-    }
-    void upgrade(){
-        if(exp>=rank*10){
-            exp=exp-rank*10;
-            rank++;
-            hp=rank*10;
-            damage=rank*3;
-        }
-    }
-    void win(int m,int e,int m1,int e1,char t){
-        if(t=='S'){
-            money=money+m*2+m1;
-            exp=exp+e*2+e1;
-        }
-        else{
-            money=money+m+m1;
-            exp=exp+e+e1;
-        }
-    }
-    int getrank(){
-        return rank;
-    }
-    int getexp(){
-        return exp;
-    } 
-    int gethp(){
-        return hp;
-    }
-    int getdamage(){
-        return damage;
-    }
-    int getmoney(){
-        return money;
-    }
-};
-class NMonster
+    ll res = 0;
+    while (b)
+    {
+        if (b & 1)
+            res = (res + a) % mod;
+        a = (a + a) % mod;
+        b >>= 1;
+    }
+    return res;
+}
+
+ll quickMi(ll a, ll b, ll m)
 {
-private:
-    int rank;
-    int hp;
-    int damage;
-    int money;
-    int exp;
-public:
-    void initial(int r){
-        rank=r;
-        exp=10*rank;
-        hp=10*rank;
-        damage=2*rank;
-        money=10*rank;
-    }
-    void attack(){
-        ;
-    }
-    void fightback(){
-        ;
-    }
-    void attacked(int d){
-        hp=hp-d;
-    }
-    void display(){
-        cout<<"rank="<<rank<<" hp="<<hp<<" damage="<<damage<<" exp="<<exp<<" money="<<money<<endl;
-    }
-    int getrank(){
-        return rank;
-    }
-    int getexp(){
-        return exp;
-    } 
-    int gethp(){
-        return hp;
-    }
-    int getdamage(){
-        return damage;
-    }
-    int getmoney(){
-        return money;
-    }
-};
-class AMonster
+    ll aa = a;
+    ll ret = 1;
+    while (b)
+    {
+        if (b % 2 == 1)
+            // ret = (ret * aa) % m;
+            ret = mod_mul(ret, aa, m);
+        // aa = (aa * aa) % m;
+        aa = mod_mul(aa, aa, m);
+        b /= 2;
+    }
+    return ret;
+}
+ll h[maxn];
+ll a[maxn];
+ll fz[maxn];
+ll fm[maxn];
+int main()
 {
-private:
-    int rank;
-    int hp;
-    int damage;
-    int money;
-    int exp;
-public:
-    void initial(int r){
-        rank=r;
-        exp=10*rank;
-        hp=5*rank;
-        damage=4*rank;
-        money=10*rank;
-    }
-    void attack(){
-        ;
-    }
-    void fightback(){
-        ;
-    }
-    void attacked(int d){
-        hp=hp-d;
-    }
-    void display(){
-        cout<<"rank="<<rank<<" hp="<<hp<<" damage="<<damage<<" exp="<<exp<<" money="<<money<<endl;
-    }
-    int getrank(){
-        return rank;
-    }
-    int getexp(){
-        return exp;
-    } 
-    int gethp(){
-        return hp;
-    }
-    int getdamage(){
-        return damage;
-    }
-    int getmoney(){
-        return money;
-    }
-};
-class DMonster
-{
-private:
-    int rank;
-    int hp;
-    int damage;
-    int money;
-    int exp;
-public:
-    void initial(int r){
-        rank=r;
-        exp=10*rank;
-        hp=20*rank;
-        damage=1*rank;
-        money=10*rank;
-    }
-    void attack(){
-        ;
-    }
-    void fightback(){
-        ;
-    }
-    void attacked(int d){
-        hp=hp-d/2;
-    }
-    void display(){
-        cout<<"rank="<<rank<<" hp="<<hp<<" damage="<<damage<<" exp="<<exp<<" money="<<money<<endl;
-    }
-    int getrank(){
-        return rank;
-    }
-    int getexp(){
-        return exp;
-    } 
-    int gethp(){
-        return hp;
-    }
-    int getdamage(){
-        return damage;
-    }
-    int getmoney(){
-        return money;
-    }
-};
-class SMonster
-{
-private:
-    int rank;
-    int hp;
-    int damage;
-    int money;
-    int exp;
-public:
-    void initial(int r){
-        rank=r;
-        exp=20*rank;
-        hp=10*rank;
-        damage=1*rank;
-        money=20*rank;
-    }
-    void attack(){
-        ;
-    }
-    void fightback(){
-        ;
-    }
-    void attacked(int d){
-        hp=hp-d;
-    }
-    void display(){
-        cout<<"rank="<<rank<<" hp="<<hp<<" damage="<<damage<<" exp="<<exp<<" money="<<money<<endl;
-    }
-    int getrank(){
-        return rank;
-    }
-    int getexp(){
-        return exp;
-    } 
-    int gethp(){
-        return hp;
-    }
-    int getdamage(){
-        return damage;
-    }
-    int getmoney(){
-        return money;
-    }
-};
-class Angel
-{
-private:
-    int rank;
-    int exp;
-    int damage;
-    int money;
-public:
-    void initial(int r){
-        rank=r;
-        exp=5*rank;
-        damage=0.5*rank;
-        money=5*rank;
-    }
-    void attack(){
-        ;
-    }
-    int getrank(){
-        return rank;
-    }
-    int getexp(){
-        return exp;
-    } 
-    int getdamage(){
-        return damage;
-    }
-    int getmoney(){
-        return money;
-    }
-};
-int main()
-{
-    int flag=0;
-    int flag1,flag2,flag3,flag4;
-    int eflag=0;
-    int winflag=0;
-    int t;
-    cin>>t;
-    int rank;
-    int Nrank,Srank,Drank,Arank;
-    while(t--){
-            flag=1;
-            flag1=1;
-            flag2=1;
-            flag3=1;
-            flag4=1;
-            eflag=0;
-            winflag=0;
-            cin>>rank;
-            cin>>Nrank>>Srank>>Drank>>Arank;
-            Ultraman Outman;
-            Outman.initial(rank);
-            Outman.display();
-            Angel OutAngel;
-            OutAngel.initial(rank);
-            NMonster monsterN;
-            monsterN.initial(Nrank);
-            monsterN.display();
-            SMonster monsterS;
-            monsterS.initial(Srank);
-            monsterS.display();
-            DMonster monsterD;
-            monsterD.initial(Drank);
-            monsterD.display();
-            Angel AngelD;
-            AngelD.initial(Srank);
-            AMonster monsterA;
-            Angel AngelA;
-            AngelA.initial(Arank);
-            monsterA.initial(Arank);
-            monsterA.display();
-        while(flag){
-            if(flag1==1)
-                    monsterN.attacked(Outman.getdamage());
-            if(flag2==1)
-                    monsterS.attacked(Outman.getdamage());
-            if(flag3==1)
-                    monsterD.attacked(Outman.getdamage());
-            if(flag4==1)
-                    monsterA.attacked(Outman.getdamage());
-            if(flag1==1){
-                if(monsterN.gethp()>0){
-                    Outman.attacked('N',monsterN.getdamage(),0);
-                    if(Outman.gethp()>10){
-                        if(Outman.gethp()<5*Outman.getrank()){
-                            Outman.restore();
-                        }
-                    }
-                    else{
-                        Outman.escape();
-                        eflag=1;
-                        cout<<"lose"<<endl;
-                        Outman.display();
-                        flag=0;
-                    }
-                }
-                else if(monsterN.gethp()<=0){
-                    Outman.win(monsterN.getmoney(),monsterN.getexp(),0,0,'N');
-                    while(1){
-                        if(Outman.getexp()<Outman.getrank()*10)
-                            break;
-                        Outman.upgrade();
-                        OutAngel.initial(Outman.getrank());
-                    }
-                    flag1=0;
-                    cout<<"win"<<endl;
-                    Outman.display();
-                    winflag++;
-                }
-            }
-            if (flag==0)
-            {
-                break;
-            }
-            if(flag2==1){
-                if(monsterS.gethp()>0){
-                    Outman.attacked('S',monsterS.getdamage(),0);
-                    if(Outman.gethp()>10){
-                        if(Outman.gethp()<5*Outman.getrank()){
-                            Outman.restore();
-                        }
-                    }
-                    else{
-                        Outman.escape();
-                        eflag=1;
-                        cout<<"lose"<<endl;
-                        Outman.display();
-                        flag=0;
-                    }
-                }
-                else if(monsterS.gethp()<=0){
-                    Outman.win(monsterS.getmoney(),monsterS.getexp(),0,0,'S');
-                    while(1){
-                        if(Outman.getexp()<Outman.getrank()*10)
-                            break;
-                        Outman.upgrade();
-                        OutAngel.initial(Outman.getrank());
-                    }
-                    flag2=0;
-                    cout<<"win"<<endl;
-                    Outman.display();
-                    winflag++;
-                }
-            }
-            if (flag==0)
-            {
-                break;
-            }
-            if(flag3==1){
-                if(monsterD.gethp()>0){
-                    Outman.attacked('D',monsterD.getdamage(),0);
-                    if(Outman.gethp()>10){
-                        if(Outman.gethp()<5*Outman.getrank()){
-                            Outman.restore();
-                        }
-                    }
-                    else{
-                        Outman.escape();
-                        eflag=1;
-                        cout<<"lose"<<endl;
-                        Outman.display();
-                        flag=0;
-                    }
-                }
-                else if(monsterD.gethp()<=0){
-                    Outman.win(monsterD.getmoney(),monsterD.getexp(),AngelD.getmoney(),AngelD.getexp(),'D');
-                    while(1){
-                        if(Outman.getexp()<Outman.getrank()*10)
-                            break;
-                        Outman.upgrade();
-                        OutAngel.initial(Outman.getrank());
-                    }
-                    flag3=0;
-                    cout<<"win"<<endl;
-                    Outman.display();
-                    winflag++;
-                }
-            }
-            if (flag==0)
-            {
-                break;
-            }
-            if(flag4==1){
-                if(monsterA.gethp()>0){
-                    Outman.attacked('A',monsterA.getdamage(),AngelA.getdamage());
-                    if(Outman.gethp()>10){
-                        if(Outman.gethp()<5*Outman.getrank()){
-                            Outman.restore();
-                        }
-                    }
-                    else{
-                        Outman.escape();
-                        eflag=1;
-                        cout<<"lose"<<endl;
-                        Outman.display();
-                        flag=0;
-                    }
-                }
-                else if(monsterA.gethp()<=0){
-                    Outman.win(monsterA.getmoney(),monsterA.getexp(),AngelA.getmoney(),AngelA.getexp(),'N');
-                    while(1){
-                        if(Outman.getexp()<Outman.getrank()*10)
-                            break;
-                        Outman.upgrade();
-                        OutAngel.initial(Outman.getrank());
-                    }
-                    flag4=0;
-                    cout<<"win"<<endl;
-                    Outman.display();
-                    winflag++;
-                }
-            }
-            if(winflag==4){
-                flag=0;
-                cout<<"win all"<<endl;
-            }
-            if(flag==0){
-                break;
-            }
-        }
-    }
-    return 0;
+    ll p;
+    int n, t;
+    // while (cin >> p >> n >> t)
+    // {
+    cin >> p >> n >> t;
+    for (int i = 0; i < t; i++)
+    {
+        a[i] = rand() % (p);
+    }
+    for (int i = 1; i <= n; i++)
+    {
+        int k = t;
+        while (k)
+        {
+            h[i] += (a[k - 1] * quickMi(i, k - 1, p));
+            k -= 1;
+        }
+    }
+    h[0] = a[0];
+    int xishu = (t % 2 == 0) ? -1 : 1;
+    ll calS = 0;
+    for (int i = 1; i <= t; i++)
+    {
+        // ll cnt = h[i];
+        fz[i] = fm[i] = 1;
+        for (int j = 1; j <= t; j++)
+        {
+            if (i == j)
+                continue;
+            fz[i] *= j;
+            fm[i] *= (i - j);
+        }
+        fz[i] *= h[i];
+    }
+    ll totfz, totfm;
+    totfz = 0;
+    totfm = 1;
+    for (int i = 1; i <= t; i++)
+    {
+        ll tfz = totfz;
+        ll tfm = totfm;
+        totfz = tfz * fm[i] + fz[i] * tfm;
+        totfm = tfm * fm[i];
+    }
+    while (totfm < 0)
+        totfm = (totfm + p) % p;
+    while (totfz < 0)
+        totfz = (totfz + p) % p;
+    totfm = quickMi(totfm, p - 2, p);
+    calS = (totfz * totfm) % p;
+    calS *= xishu;
+    cout << (calS - a[0]) << endl;
+    // cout<<calS<<endl;
+    // cout<<a[0]<<endl;
+    // }
+    return 0;
 }
