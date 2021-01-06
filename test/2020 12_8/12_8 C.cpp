@@ -50,6 +50,12 @@ public:
             cout<<endl;
         }
     }
+    ~Matrix(){
+        for(int i=0; i<m; i++){
+            delete []data[i];
+        }
+        delete []data;
+    }
     friend Matrix operator+(Matrix &a, Matrix &b);
 };
 Matrix operator+(Matrix &a, Matrix &b)

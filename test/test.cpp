@@ -2,10 +2,10 @@
 #include<cstring>
 #include<algorithm>
 using namespace std;
-bool cmp(int a, int b){
-    return a<b;
-}
 int main()
 {
+    int *a;
+    int b = 8;
+    a = &b;
     return 0;
 }
