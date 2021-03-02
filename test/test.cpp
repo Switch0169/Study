@@ -2,10 +2,11 @@
 #include<cstring>
 #include<algorithm>
 using namespace std;
+#define ll long long
 int main()
 {
-    int *a;
-    int b = 8;
-    a = &b;
+    ll a;
+    cin>>a;
+    cout<<a;
     return 0;
 }

@@ -5,6 +5,13 @@
         "system_error": "cpp",
         "xlocale": "cpp",
         "iosfwd": "cpp",
-        "ostream": "cpp"
-    }
+        "ostream": "cpp",
+        "queue": "cpp",
+        "map": "cpp",
+        "stack": "cpp",
+        "cstdio": "cpp",
+        "algorithm": "cpp",
+        "xutility": "cpp"
+    },
+    "cmake.configureOnOpen": false
 }
